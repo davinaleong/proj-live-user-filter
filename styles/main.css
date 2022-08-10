@@ -121,6 +121,7 @@ body {
   flex-direction: column;
   max-height: 50vh;
   overflow-y: auto;
+  background-color: var(--clr-neutral-100);
 }
 
 .user-list-item {
@@ -132,9 +133,15 @@ body {
   gap: var(--size-100) var(--size-400);
 }
 
+.user-list-item[data-hide="true"] {
+  display: none;
+}
+
 .user-avatar {
   border-radius: 50%;
   grid-row: 1 / span 2;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
 }
 
 .user-name {
