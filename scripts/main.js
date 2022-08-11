@@ -6,6 +6,10 @@ const filterInput = document.querySelector(`input[name="filter"]`);
 const resultEl = document.querySelector(`ul[data-user-list]`);
 const listItems = [];
 
+getData();
+
+filterInput.addEventListener(`input`, (e) => filterData(e.target.value));
+
 async function getData() {
   const { url } = settings;
   const response = await fetch(url);
@@ -15,28 +19,31 @@ async function getData() {
   resultEl.innerHTML = ``;
 
   results.forEach((user) => {
-    console.log(user);
     const { name, location, picture } = user;
     const { first, last } = name;
     const { country, state } = location;
-    const { thumbnail } = picture;
+    const { large } = picture;
 
     const userListItemEl = document.createElement(`li`);
     userListItemEl.classList.add(`user-list-item`);
+    userListItemEl.innerHTML = `
+      <img src="${large}" alt="${first} ${last} avatar" class="user-avatar">
+      <h3 class="user-name">${first} ${last}</h3>
+      <p class="user-location">${state}, ${country}</p>
+    `;
 
-    const userAvatarEl = document.createElement(`img`);
-    userAvatarEl.classList.add(`user-avatar`);
-    userAvatarEl.setAttribute(`src`, thumbnail);
-    userAvatarEl.setAttribute(`alt`, `${first} ${last}'s Avatar`);
-    userListItemEl.appendChild(userAvatarEl);
-
-    const userNameEl = document.createElement(`h3`);
-    userNameEl.innerText = `${first} ${last}`;
-    userNameEl.classList.add(`user-name`);
-    userListItemEl.appendChild(userNameEl);
+    listItems.push(userListItemEl);
 
     resultEl.appendChild(userListItemEl);
   });
 }
 
-getData();
+function filterData(searchTerm) {
+  listItems.forEach((item) => {
+    if (item.innerText.toLowerCase().includes(searchTerm.toLowerCase())) {
+      item.removeAttribute(`data-hide`);
+    } else {
+      item.setAttribute(`data-hide`, true);
+    }
+  });
+}

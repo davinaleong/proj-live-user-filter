@@ -114,6 +114,11 @@ body {
   color: var(--clr-neutral-100);
   background-color: var(--clr-primary-900);
   border-radius: 100vmax;
+  box-shadow: inset 0.1em 0.1em 0.3em 0 rgba(0, 0, 0, 0.2);
+}
+
+.filter-input:where(:focus) {
+  outline: none;
 }
 
 .user-list {
@@ -126,11 +131,11 @@ body {
 
 .user-list-item {
   width: 100%;
-  padding: var(--size-500);
+  padding: var(--size-400) var(--size-500);
   border-bottom: thin solid var(--clr-neutral-300);
   display: grid;
   grid-template-columns: 3.8em auto;
-  gap: var(--size-100) var(--size-400);
+  gap: var(--size-100) var(--size-300);
 }
 
 .user-list-item[data-hide="true"] {
